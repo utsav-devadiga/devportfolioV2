@@ -26,9 +26,9 @@ To create your new Android project, follow these steps:
 3. In the **Select a Project Template** window, select **Empty Activity** and click **Next.**
 4. In the **Configure your project** window, complete the following:<br>
    • Enter "My First App" in the **Name** field.<br>
-   • Enter "com.example.myfirstapp" in the **Package name field.**
+   • Enter "com.example.myfirstapp" in the **Package name field.**<br>
    • If you'd like to place the project in a different folder, change its **Save** location.<br>
-   • Select either **Java** or **Kotlin** from the **Language** drop-down menu.
+   • Select either **Java** or **Kotlin** from the **Language** drop-down menu.<br>
    • Select the lowest version of Android you want your app to support in the **Minimum SDK** field.<br>
    • If your app will require legacy library support, mark the **Use legacy android.support libraries** checkbox.<br>
    • Leave the other options as they are.
