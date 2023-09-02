@@ -12,9 +12,9 @@ import { LightbulbFilament } from "phosphor-react";
     <div class="skills-grid mt-5">
       <div class="skill-item">
         <p class="skill-title pb-3">
-          Android (native) <span>2 Years</span>
+          Android (native) <span id="android-years">...</span>
         </p>
-        <p class="text-muted skill-about mb-4">
+        <p id="android-desc-years" class="text-muted skill-about mb-4">
          Energetic and curiosity-driven <code>Android</code> developer with 2 
          years of experience writing top-quality clean code 
          for high-paced businesses.
@@ -22,6 +22,9 @@ import { LightbulbFilament } from "phosphor-react";
         <div class="tags">
           <span>Java</span>
           <span>Kotlin</span>
+          <span>Retrofit</span>
+          <span>DI</span>
+          <span>MVVM</span>
           <span>Firebase</span>
         </div>
       </div>
@@ -29,7 +32,7 @@ import { LightbulbFilament } from "phosphor-react";
 
  <div class="skill-item">
         <p class="skill-title pb-3">
-          React Native <span>1.5 Years</span>
+          React Native <span id="react-native-years">1.5 Years</span>
         </p>
         <p class="text-muted skill-about mb-4">    
          Creative React Native Developer with 1.5 years designing useful, 
@@ -40,13 +43,14 @@ import { LightbulbFilament } from "phosphor-react";
           <span>JS</span>
           <span>css-in-js</span>
           <span>Expo</span>
+          <span>Axios</span>
           <span>iOS</span>
         </div>
       </div>
 
       <div class="skill-item">
         <p class="skill-title pb-3">
-          React<span>1 Year</span>
+          React<span id="react-years">1 Year</span>
         </p>
         <p class="text-muted skill-about mb-4">    
         Comfortable with DOM Manuplations and interactions, events, APIs,
@@ -159,3 +163,50 @@ import { LightbulbFilament } from "phosphor-react";
     }
   }
 </style>
+
+<script>
+  // Define a function to calculate years of experience
+  function calculateExperience(startDate, id) {
+  
+    const yearsSpan = document.getElementById(id);
+    
+    if (yearsSpan) {
+      const currentDate = new Date();
+      const start = new Date(startDate);
+      const yearsDiff = currentDate.getFullYear() - start.getFullYear();
+      yearsSpan.textContent = yearsDiff + " Years";
+    } else {
+      console.error("Element with ID '" + id + "' not found.");
+    }
+  }
+
+  // Call the function with the start date and ID for each skill
+  calculateExperience("2020-07-28", "android-years");
+  //calculateExperience("2021-01-01", "react-native-years");
+  //calculateExperience("2020-01-01", "react-years");
+  // Add more calls for additional skills if needed
+</script>
+<script>
+  // Define a function to calculate years of experience
+  function calculateExperience(startDate, id) {
+  
+    const yearsSpan = document.getElementById(id);
+    
+    if (yearsSpan) {
+      const currentDate = new Date();
+      const start = new Date(startDate);
+      const yearsDiff = currentDate.getFullYear() - start.getFullYear();
+      yearsSpan.textContent = "Energetic and curiosity-driven Android developer with "+ yearsDiff +" years of experience writing top-quality clean code for high-paced businesses.";
+    } else {
+      console.error("Element with ID '" + id + "' not found.");
+    }
+  }
+
+  // Call the function with the start date and ID for each skill
+  calculateExperience("2020-07-28", "android-desc-years");
+  //calculateExperience("2021-01-01", "react-native-years");
+  //calculateExperience("2020-01-01", "react-years");
+  // Add more calls for additional skills if needed
+</script>
+
+
