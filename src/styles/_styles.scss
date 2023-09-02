@@ -1,0 +1,84 @@
+@import "mixins";
+
+.site-header {
+  background-color: var(--gray-0);
+  background-image: url("/public/assets/bbblurry.svg");
+  padding-inline: 0;
+  padding-block-start: var(--size-8);
+  padding-block-end: var(--size-10);
+  clip-path: ellipse(177% 100% at 14.44% 0%);
+  position: relative;
+  z-index: 9;
+
+  & > * {
+    position: relative;
+    z-index: 5;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(256, 256, 256, 0.75);
+    backdrop-filter: blur(5px);
+    z-index: 3;
+  }
+
+  .name {
+    font-weight: 800;
+    font-size: var(--font-size-fluid-3);
+    color: var(--gray-9);
+
+    @include break(lg) {
+      font-size: 4.75rem;
+    }
+  }
+
+  .tagline {
+    font-weight: 600;
+    font-size: var(--size-3);
+    color: var(--accent);
+
+    @include break(md) {
+      font-size: var(--size-4);
+    }
+  }
+
+  .header-cta {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: var(--radius-2);
+    line-height: 1;
+    text-decoration: none;
+    display: inline-flex;
+    padding: 1em 3em;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35em;
+    transition: background var(--duration) ease, box-shadow var(--duration) ease;
+    box-shadow: var(--shadow-1);
+    width: 100%;
+
+    @include break(md) {
+      width: auto;
+    }
+
+    &:hover {
+      background: var(--accent-dark);
+      box-shadow: var(--shadow-3);
+
+      svg {
+        animation: var(--animation-shake-x) forwards;
+        animation-timing-function: var(--ease-squish-2);
+        animation-duration: 0.5s;
+      }
+    }
+
+    @include focus-ring;
+  }
+}
