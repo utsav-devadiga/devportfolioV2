@@ -2,7 +2,7 @@
 setup: |
   import Layout from '../../layouts/BlogPost.astro'
 title: New Year, New Portfolio!
-publishDate: 31 Dec 2021
+publishDate: 1 Feb 2022
 author: Utsav Devadiga
 heroImage: "/assets/blog/hello-world.jpeg"
 description: All about my new portfolio re-design, built with Astro, Bootstrap, SASS + Open Props.
@@ -17,7 +17,7 @@ Even though I never started doing web-designing with the intentions to pursue my
 
 Ever since I got a new job, I wanted to update my portfolio, like to make it a little bit Job-oriented, I started working on a couple of portfolio designs as well, but they never actually made it to the Internet because I never got enough time to focus on those.
 
-I finally started working on a new re-design in the mid weeks of December 2021, and here it is, live!
+I finally started working on a new re-design in the mid weeks of Febrruary 2022, and here it is, live!
 
 ### My Choice of Framework
 
