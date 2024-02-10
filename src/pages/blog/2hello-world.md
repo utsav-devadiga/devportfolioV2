@@ -9,7 +9,7 @@ description: All about my new portfolio re-design, built with Astro, Bootstrap, 
 tags: [astro, sass]
 ---
 
-Hey there, welcome to my brand new portfolio!
+Hey there, welcome to my brand new portfolio!!
 
 Even though I never started doing web-designing with the intentions to pursue my career in this, I finally got a job in August 2020 after trying several other career options that I don't even want to mention now, but the bottom line is, I'm a full-time Android Engineer and web developer now, hurray!?
 
