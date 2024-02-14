@@ -4,7 +4,7 @@ setup: |
 title: Certificate Pinning in Android
 publishDate: 14 Feb 2024
 author: Utsav Devadiga
-heroImage: "/assets/blog/hello-world.jpeg"
+heroImage: "/assets/blog/sslpin.png"
 description: Mastering Certificate Pinning in Android Applications
 tags: [java, kotlin,android]
 ---
@@ -49,4 +49,123 @@ Retrofit retrofit = new Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .build();
 ```
+Addressing Advanced Bypass Techniques
+While certificate pinning significantly enhances security, tools like Frida can dynamically modify app behavior to bypass these protections. Implementing runtime checks, using code obfuscation, and detecting debugging tools can mitigate these risks.
+
+### Step 3: Leveraging Network Security Configuration
+
+Android's Network Security Configuration provides a streamlined XML-based approach to certificate pinning, simplifying the management and updating of certificates.
+
+Setting Up Network Security Configuration
+
+1.Define your Network Security Configuration in XML:
+```xml
+<network-security-config>
+    <domain-config>
+        <domain includeSubdomains="true">your.domain.com</domain>
+        <pin-set expiration="2023-01-01">
+            <pin digest="SHA-256">base64EncodedPublicKeyHash==</pin>
+            <!-- Add more pins if needed -->
+        </pin-set>
+    </domain-config>
+</network-security-config>
+```
+2.Reference the configuration in your app's manifest:
+```xml
+<application
+    android:networkSecurityConfig="@xml/network_security_config"
+    ... >
+    ...
+</application>
+```
+
+This method allows for easy certificate management, enhancing security without complicating the development process.
+
+### Step 4: Custom Trust Manager for Advanced Scenarios
+
+For scenarios requiring deeper control, like handling self-signed certificates, manually configuring a custom X509TrustManager and SSLContext is advisable. This approach provides a programmable layer for precise security handling.
+
+For advanced scenarios, manually verify the server's certificate by implementing a custom X509TrustManager:
+
+```java
+TrustManager[] trustManagers = new TrustManager[]{
+    new X509TrustManager() {
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) {}
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) {
+            // we overrrride any exisiting mechanism
+        }
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return new X509Certificate[]{};
+        }
+    }
+};
+```
+SSL Context Configuration
+Configure the SSL context to use your custom trust manager:
+
+```java
+SSLContext sslContext = SSLContext.getInstance("TLS");
+sslContext.init(null, trustManagers, new SecureRandom());
+```
+
+Retrofit and OkHttp Integration
+Use the configured SSL context with OkHttp to enforce certificate pinning:
+
+```java
+OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    .sslSocketFactory(sslContext.getSocketFactory(), (X509TrustManager)trustManagers[0])
+    .build();
+
+```
+
+
+Our security mechanism shines in its manual verification process, facilitated by the CertChecker class. This class compares the SHA-256 hash of the server's public key against a hardcoded pin—a base64-encoded SHA-256 hash of the legitimate server's public key:
+
+```kotlin
+class CertChecker {
+    companion object {
+        fun doesCertMatchPin(pin: String, cert: Certificate): Boolean {
+            val certHash = cert.publicKey.encoded.toByteString().sha256()
+            return certHash == pin.decodeBase64()
+        }
+    }
+}
+```
+
+By integrating CertChecker into the network call flow, we ensure that the app communicates only with the intended server, effectively preventing MITM attacks.
+
+### Step 5: Comprehensive Error Handling
+Implement robust error handling mechanisms to address certificate verification failures, ensuring users are promptly informed about potential security issues.
+
+### Visualizing Certificate Pinning
+Consider the following simplified diagram to understand the certificate pinning process better:
+
+```scss
+[Client App] ---(1. Secure Request)--> [Server]
+    |                                     |
+    |<---(2. Presents Certificate)--------|
+    |
+    |---(3. Verifies Certificate)-------->|
+    |                                     |
+    |<---(4. Secure Communication)--------|
+
+```
+
+- Secure Request: Initiation of a secure request by the app.
+- Presents Certificate: The server presents its SSL certificate.
+- Verifies Certificate: The app verifies the server'scertificate against the pinned certificate.
+- Secure Communication: Upon successful verification, a secure - communication channel is established.
+
+### Conclusion
+Certificate pinning is a critical component of mobile app security, ensuring that communications between an app and its server are secure. By incorporating manual methods alongside Android's Network
+
+<div style="text-align:center;margin-top:20px;font-family:Inter;"><strong>Take Care Guys </strong>🤗</div>
+
+
+
 
