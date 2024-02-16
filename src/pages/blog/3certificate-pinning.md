@@ -56,9 +56,9 @@ While certificate pinning significantly enhances security, tools like Frida can 
 
 Android's Network Security Configuration provides a streamlined XML-based approach to certificate pinning, simplifying the management and updating of certificates.
 
-Setting Up Network Security Configuration
+#Setting Up Network Security Configuration
 
-1.Define your Network Security Configuration in XML:
+-1.Define your Network Security Configuration in XML:
 ```xml
 <network-security-config>
     <domain-config>
@@ -70,7 +70,7 @@ Setting Up Network Security Configuration
     </domain-config>
 </network-security-config>
 ```
-2.Reference the configuration in your app's manifest:
+-2.Reference the configuration in your app's manifest:
 ```xml
 <application
     android:networkSecurityConfig="@xml/network_security_config"
