@@ -58,7 +58,7 @@ Android's Network Security Configuration provides a streamlined XML-based approa
 
 #Setting Up Network Security Configuration
 
--1.Define your Network Security Configuration in XML:
+- 1.Define your Network Security Configuration in XML:
 ```xml
 <network-security-config>
     <domain-config>
@@ -70,7 +70,7 @@ Android's Network Security Configuration provides a streamlined XML-based approa
     </domain-config>
 </network-security-config>
 ```
--2.Reference the configuration in your app's manifest:
+- 2.Reference the configuration in your app's manifest:
 ```xml
 <application
     android:networkSecurityConfig="@xml/network_security_config"
