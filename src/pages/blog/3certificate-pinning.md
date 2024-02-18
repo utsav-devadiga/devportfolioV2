@@ -49,7 +49,7 @@ Retrofit retrofit = new Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .build();
 ```
-Addressing Advanced Bypass Techniques
+# Addressing Advanced Bypass Techniques
 While certificate pinning significantly enhances security, tools like Frida can dynamically modify app behavior to bypass these protections. Implementing runtime checks, using code obfuscation, and detecting debugging tools can mitigate these risks.
 
 ### Step 3: Leveraging Network Security Configuration
