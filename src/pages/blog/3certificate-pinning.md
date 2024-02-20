@@ -65,7 +65,7 @@ Android's Network Security Configuration provides a streamlined XML-based approa
         <domain includeSubdomains="true">your.domain.com</domain>
         <pin-set expiration="2023-01-01">
             <pin digest="SHA-256">base64EncodedPublicKeyHash==</pin>
-            <!-- Add more pins if needed -->
+            <!-- Add more pins if needed / also you can add certificates -->
         </pin-set>
     </domain-config>
 </network-security-config>
