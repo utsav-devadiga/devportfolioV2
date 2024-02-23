@@ -83,7 +83,7 @@ This method allows for easy certificate management, enhancing security without c
 
 ### Step 4: Custom Trust Manager for Advanced Scenarios
 
-For scenarios requiring deeper control, like handling self-signed certificates, manually configuring a custom X509TrustManager and SSLContext is advisable. This approach provides a programmable layer for precise security handling.
+For scenarios requiring deeper control, like handling self-signed certificates , manually configuring a custom X509TrustManager and SSLContext is advisable. This approach provides a programmable layer for precise security handling.
 
 For advanced scenarios, manually verify the server's certificate by implementing a custom X509TrustManager:
 
