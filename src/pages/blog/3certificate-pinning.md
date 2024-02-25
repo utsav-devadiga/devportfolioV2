@@ -30,7 +30,7 @@ Begin with extracting the hash or public key from your server's SSL certificate 
 ```bash
 openssl x509 -in mycertificate.pem -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
 ```
-This command produces the base64-encoded SHA-256 hash of the server's public key, ready for pinning in your app.
+This command produces the base64-encoded **SHA-256** hash of the server's public key, ready for pinning in your app.
 
 ### Step 2: Retrofit and OkHttp Configuration
 
@@ -64,7 +64,7 @@ Android's Network Security Configuration provides a streamlined XML-based approa
     <domain-config>
         <domain includeSubdomains="true">your.domain.com</domain>
         <pin-set expiration="2023-01-01">
-            <pin digest="SHA-256">base64EncodedPublicKeyHash==</pin>
+            <pin digest="**SHA-256**">base64EncodedPublicKeyHash==</pin>
             <!-- Add more pins if needed / also you can add certificates -->
         </pin-set>
     </domain-config>
@@ -124,7 +124,7 @@ OkHttpClient okHttpClient = new OkHttpClient.Builder()
 ```
 
 
-Our security mechanism shines in its manual verification process, facilitated by the CertChecker class. This class compares the SHA-256 hash of the server's public key against a hardcoded pin—a base64-encoded SHA-256 hash of the legitimate server's public key:
+Our security mechanism shines in its manual verification process, facilitated by the CertChecker class. This class compares the **SHA-256** hash of the server's public key against a hardcoded pin—a base64-encoded **SHA-256** hash of the legitimate server's public key:
 
 ```kotlin
 class CertChecker {
