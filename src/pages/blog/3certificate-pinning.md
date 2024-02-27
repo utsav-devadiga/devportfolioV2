@@ -126,7 +126,7 @@ OkHttpClient okHttpClient = new OkHttpClient.Builder()
 
 Our security mechanism shines in its manual verification process, facilitated by the CertChecker class. This class compares the **SHA-256** hash of the server's public key against a hardcoded pin—a base64-encoded **SHA-256** hash of the legitimate server's public key:
 
-``` 
+```  java
 class CertChecker {
     companion object {
         fun doesCertMatchPin(pin: String, cert: Certificate): Boolean {
