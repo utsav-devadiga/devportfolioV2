@@ -87,7 +87,7 @@ For scenarios requiring deeper control, like handling self-signed certificates ,
 
 For advanced scenarios, manually verify the server's certificate by implementing a custom X509TrustManager:
 
-```java
+``` java
 TrustManager[] trustManagers = new TrustManager[]{
     new X509TrustManager() {
         @Override
