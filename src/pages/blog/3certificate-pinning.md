@@ -15,7 +15,7 @@ In the quest to secure mobile applications from potential threats, Android devel
 
 ## Introduction to Certificate Pinning
 
-Certificate pinning involves embedding the known certificate's public key or its hash into your application. This preemptive measure allows the app to verify the server's identity by matching the presented certificate to the one you've pinned. If the certificates match, the connection is deemed secure; if not, the app refuses to connect, effectively neutralizing potential MITM attacks.
+Certificate pinning involves embedding the known certificate's public key or its hash into your application. This preemptive measure allows the app to verify the server's identity by matching the presented certificate to the one you've pinned. If the certificates match, the connection is deemed secure; if not, the app refuses to connect, effectively neutralizing potential MITM attacks. 
 
 ## The Necessity of Certificate Pinning
 
