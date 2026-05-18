@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="en" class="astro-TJRMY5PG"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Mastering Certificate Pinning in Android Applications">
+    <title>Certificate Pinning in Android | Utsav Devadiga</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#1270e3">
+    <link rel="stylesheet" async="" href="../../assets/main.1ce5eb03.css"><link rel="stylesheet" async="" href="../../assets/typography.9e77f6db.css"><link rel="stylesheet" async="" href="../../assets/2hello-world.30316d56.css">
+    
+
+    <meta property="og:title" content="Certificate Pinning in Android | Utsav Devadiga">
+    <meta property="og:type" content="article">
+    <meta property="og:description" content="Mastering Certificate Pinning in Android Applications">
+    <meta property="og:url" content="https://utsav-dev.in/blog/3certificate-pinning/">
+    <meta property="og:image" content="/assets/blog/sslpin.png">
+  
+
+</head>
+
+  <body class="blog-post">
+    
+
+<nav class="site-nav astro-VJVMMLLH">
+  <div class="nav-inner container d-flex justify-content-between align-items-center py-3 astro-VJVMMLLH">
+    <h1 class="branding astro-VJVMMLLH">
+      <a href="/" class="astro-VJVMMLLH">Utsav Devadiga</a>
+    </h1>
+
+    <ul class="nav-links d-flex gap-3 ps-0 m-0 astro-VJVMMLLH">
+      <li class="astro-VJVMMLLH">
+        <a href="/blog" class="astro-VJVMMLLH"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M48,144a64,64,0,0,1,64,64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></path><path d="M48,96A112,112,0,0,1,160,208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></path><path d="M48,48A159.1,159.1,0,0,1,161.1,94.9,159.1,159.1,0,0,1,208,208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></path><circle cx="52" cy="204" r="16"></circle></svg> All Posts</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+    <main class="astro-TJRMY5PG">
+      <div class="article-outer astro-TJRMY5PG">
+        <div class="article-inner astro-TJRMY5PG">
+          <div class="article-header text-center astro-TJRMY5PG">
+            <div class="container astro-TJRMY5PG">
+              <div class="article-hero mb-4 container-lg astro-TJRMY5PG">
+                  <img src="/assets/blog/sslpin.png" alt="Certificate Pinning in Android" class="astro-TJRMY5PG">
+                </div>
+              <h2 class="article-title astro-TJRMY5PG">Certificate Pinning in Android</h2>
+            </div>
+
+            <div class="article-meta mt-4 astro-TJRMY5PG">
+              <p class="d-inline-flex align-items-center article-author astro-TJRMY5PG">
+                <span class="d-inline-block astro-TJRMY5PG">Utsav Devadiga</span>
+                <span class="d-inline-block mx-1 astro-TJRMY5PG">on</span>
+                <span class="d-inline-block astro-TJRMY5PG">14 Feb 2024</span>
+              </p>
+              <div class="tags mt-3 astro-TJRMY5PG">
+                <span class="astro-TJRMY5PG">java</span><span class="astro-TJRMY5PG">kotlin</span><span class="astro-TJRMY5PG">android</span>
+              </div>
+            </div>
+          </div>
+          <article class="article-content container astro-TJRMY5PG">
+            <h1 id="mastering-certificate-pinning-in-android-applications-a-comprehensive-security-guide">Mastering Certificate Pinning in Android Applications: A Comprehensive Security Guide</h1><p>In the quest to secure mobile applications from potential threats, Android developers are increasingly turning to certificate pinning as a robust line of defense. This technique, which ensures that an app communicates exclusively with its intended server, is crucial for safeguarding sensitive data against Man-In-The-Middle (MITM) attacks. This guide delves deep into the implementation of certificate pinning, offering detailed code examples, an exploration of Android’s Network Security Configuration for pinning, and strategies to counteract bypass techniques such as those employed by Frida.</p><h2 id="introduction-to-certificate-pinning">Introduction to Certificate Pinning</h2><p>Certificate pinning involves embedding the known certificate’s public key or its hash into your application. This preemptive measure allows the app to verify the server’s identity by matching the presented certificate to the one you’ve pinned. If the certificates match, the connection is deemed secure; if not, the app refuses to connect, effectively neutralizing potential MITM attacks.</p><h2 id="the-necessity-of-certificate-pinning">The Necessity of Certificate Pinning</h2><p>Without certificate pinning, attackers can intercept encrypted communications by exploiting vulnerabilities in SSL/TLS protocols or by compromising Certificate Authorities (CAs). Certificate pinning closes this loophole by mandating the app to trust only the specified certificate or public key.</p><h2 id="implementing-certificate-pinning-in-android">Implementing Certificate Pinning in Android</h2><h3 id="step-1-extracting-the-public-key-or-certificate-hash">Step 1: Extracting the Public Key or Certificate Hash</h3><p>Begin with extracting the hash or public key from your server’s SSL certificate using OpenSSL:</p><pre class="language-bash"><code data-astro-raw="" class="language-bash">openssl x509 -in mycertificate.pem -pubkey -noout <span class="token operator">|</span> openssl rsa -pubin -outform der <span class="token operator">|</span> openssl dgst -sha256 -binary <span class="token operator">|</span> openssl enc -base64</code></pre><p>This command produces the base64-encoded <strong>SHA-256</strong> hash of the server’s public key, ready for pinning in your app.</p><h3 id="step-2-retrofit-and-okhttp-configuration">Step 2: Retrofit and OkHttp Configuration</h3><p>Utilize Retrofit and OkHttp for network operations, configuring OkHttp to enforce certificate pinning:</p><pre class="language-java"><code data-astro-raw="" class="language-java"><span class="token class-name">OkHttpClient</span> okHttpClient <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OkHttpClient<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">certificatePinner</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CertificatePinner<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"your.domain.com"</span><span class="token punctuation">,</span> <span class="token string">"sha256/YourPublicKeyHash=="</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Retrofit</span> retrofit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Retrofit<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">baseUrl</span><span class="token punctuation">(</span><span class="token string">"https://your.domain.com"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">client</span><span class="token punctuation">(</span>okHttpClient<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">addConverterFactory</span><span class="token punctuation">(</span><span class="token class-name">GsonConverterFactory</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre><h1 id="addressing-advanced-bypass-techniques">Addressing Advanced Bypass Techniques</h1><p>While certificate pinning significantly enhances security, tools like Frida can dynamically modify app behavior to bypass these protections. Implementing runtime checks, using code obfuscation, and detecting debugging tools can mitigate these risks.</p><h3 id="step-3-leveraging-network-security-configuration">Step 3: Leveraging Network Security Configuration</h3><p>Android’s Network Security Configuration provides a streamlined XML-based approach to certificate pinning, simplifying the management and updating of certificates.</p><h1 id="setting-up-network-security-configuration">Setting Up Network Security Configuration</h1><ul>
+<li>1.Define your Network Security Configuration in XML:</li>
+</ul><pre class="language-xml"><code data-astro-raw="" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>network-security-config</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>domain-config</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>domain</span> <span class="token attr-name">includeSubdomains</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>your.domain.com<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>domain</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pin-set</span> <span class="token attr-name">expiration</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2023-01-01<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pin</span> <span class="token attr-name">digest</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>**SHA-256**<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>base64EncodedPublicKeyHash==<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pin</span><span class="token punctuation">&gt;</span></span>
+            <span class="token comment">&lt;!-- Add more pins if needed / also you can add certificates --&gt;</span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pin-set</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>domain-config</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>network-security-config</span><span class="token punctuation">&gt;</span></span></code></pre><ul>
+<li>2.Reference the configuration in your app’s manifest:</li>
+</ul><pre class="language-xml"><code data-astro-raw="" class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>application</span>
+    <span class="token attr-name"><span class="token namespace">android:</span>networkSecurityConfig</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>@xml/network_security_config<span class="token punctuation">"</span></span>
+    <span class="token attr-name">...</span> <span class="token punctuation">&gt;</span></span>
+    ...
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>application</span><span class="token punctuation">&gt;</span></span></code></pre><p>This method allows for easy certificate management, enhancing security without complicating the development process.</p><h3 id="step-4-custom-trust-manager-for-advanced-scenarios">Step 4: Custom Trust Manager for Advanced Scenarios</h3><p>For scenarios requiring deeper control, like handling self-signed certificates , manually configuring a custom X509TrustManager and SSLContext is advisable. This approach provides a programmable layer for precise security handling.</p><p>For advanced scenarios, manually verify the server’s certificate by implementing a custom X509TrustManager:</p><pre class="language-java"><code data-astro-raw="" class="language-java"><span class="token class-name">TrustManager</span><span class="token punctuation">[</span><span class="token punctuation">]</span> trustManagers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TrustManager</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span>
+    <span class="token keyword">new</span> <span class="token class-name">X509TrustManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">checkClientTrusted</span><span class="token punctuation">(</span><span class="token class-name">X509Certificate</span><span class="token punctuation">[</span><span class="token punctuation">]</span> chain<span class="token punctuation">,</span> <span class="token class-name">String</span> authType<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">checkServerTrusted</span><span class="token punctuation">(</span><span class="token class-name">X509Certificate</span><span class="token punctuation">[</span><span class="token punctuation">]</span> chain<span class="token punctuation">,</span> <span class="token class-name">String</span> authType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// we overrrride any exisiting mechanism</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token class-name">X509Certificate</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getAcceptedIssuers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">X509Certificate</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre><p>SSL Context Configuration
+Configure the SSL context to use your custom trust manager:</p><pre class="language-java"><code data-astro-raw="" class="language-java"><span class="token class-name">SSLContext</span> sslContext <span class="token operator">=</span> <span class="token class-name">SSLContext</span><span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token string">"TLS"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+sslContext<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span> trustManagers<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SecureRandom</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre><p>Retrofit and OkHttp Integration
+Use the configured SSL context with OkHttp to enforce certificate pinning:</p><pre class="language-java"><code data-astro-raw="" class="language-java"><span class="token class-name">OkHttpClient</span> okHttpClient <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OkHttpClient<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">sslSocketFactory</span><span class="token punctuation">(</span>sslContext<span class="token punctuation">.</span><span class="token function">getSocketFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token class-name">X509TrustManager</span><span class="token punctuation">)</span>trustManagers<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>Our security mechanism shines in its manual verification process, facilitated by the CertChecker class. This class compares the <strong>SHA-256</strong> hash of the server’s public key against a hardcoded pin—a base64-encoded <strong>SHA-256</strong> hash of the legitimate server’s public key:</p><pre class="language-java"><code data-astro-raw="" class="language-java"><span class="token keyword">class</span> <span class="token class-name">CertChecker</span> <span class="token punctuation">{</span>
+    companion object <span class="token punctuation">{</span>
+        fun <span class="token function">doesCertMatchPin</span><span class="token punctuation">(</span>pin<span class="token operator">:</span> <span class="token class-name">String</span><span class="token punctuation">,</span> cert<span class="token operator">:</span> <span class="token class-name">Certificate</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token class-name">Boolean</span> <span class="token punctuation">{</span>
+            val certHash <span class="token operator">=</span> cert<span class="token punctuation">.</span>publicKey<span class="token punctuation">.</span>encoded<span class="token punctuation">.</span><span class="token function">toByteString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sha256</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> certHash <span class="token operator">==</span> pin<span class="token punctuation">.</span><span class="token function">decodeBase64</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+l̥```
+
+<span class="token class-name">By</span> integrating <span class="token class-name">CertChecker</span> into the network call flow<span class="token punctuation">,</span> we ensure that the app communicates only <span class="token keyword">with</span> <span class="token namespace">the</span> intended server<span class="token punctuation">,</span> effectively preventing MITM attacks<span class="token punctuation">.</span>
+
+### <span class="token class-name">Step</span> <span class="token number">5</span><span class="token operator">:</span> <span class="token class-name">Comprehensive</span> <span class="token class-name">Error</span> <span class="token class-name">Handling</span>
+<span class="token class-name">Implement</span> robust error handling mechanisms <span class="token keyword">to</span> <span class="token namespace">address</span> certificate verification failures<span class="token punctuation">,</span> ensuring users are promptly informed about potential security issues<span class="token punctuation">.</span>
+
+### <span class="token class-name">Visualizing</span> <span class="token class-name">Certificate</span> <span class="token class-name">Pinning</span>
+<span class="token class-name">Consider</span> the following simplified diagram <span class="token keyword">to</span> <span class="token namespace">understand</span> the certificate pinning process better<span class="token operator">:</span>
+
+```scss
+<span class="token punctuation">[</span><span class="token class-name">Client</span> <span class="token class-name">App</span><span class="token punctuation">]</span> <span class="token operator">--</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">1.</span> <span class="token class-name">Secure</span> <span class="token class-name">Request</span><span class="token punctuation">)</span><span class="token operator">--</span><span class="token operator">&gt;</span> <span class="token punctuation">[</span><span class="token class-name">Server</span><span class="token punctuation">]</span>
+    <span class="token operator">|</span>                                     <span class="token operator">|</span>
+    <span class="token operator">|</span><span class="token operator">&lt;</span><span class="token operator">--</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">2.</span> <span class="token class-name">Presents</span> <span class="token class-name">Certificate</span><span class="token punctuation">)</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">|</span>
+    <span class="token operator">|</span>
+    <span class="token operator">|</span><span class="token operator">--</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">3.</span> <span class="token class-name">Verifies</span> <span class="token class-name">Certificate</span><span class="token punctuation">)</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">&gt;</span><span class="token operator">|</span>
+    <span class="token operator">|</span>                                     <span class="token operator">|</span>
+    <span class="token operator">|</span><span class="token operator">&lt;</span><span class="token operator">--</span><span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">4.</span> <span class="token class-name">Secure</span> <span class="token class-name">Communication</span><span class="token punctuation">)</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">|</span>
+</code></pre><ul>
+<li>Secure Request: Initiation of a secure request by the app.</li>
+<li>Presents Certificate: The server presents its SSL certificate.</li>
+<li>Verifies Certificate: The app verifies the server’scertificate against the pinned certificate.</li>
+<li>Secure Communication: Upon successful verification, a secure - communication channel is established.</li>
+</ul><h3 id="conclusion">Conclusion</h3><p>Certificate pinning is a critical component of mobile app security, ensuring that communications between an app and its server are secure. By incorporating manual methods alongside Android’s Network</p><div style="text-align:center;margin-top:20px;font-family:Inter;"><strong>Take Care Guys </strong>🤗</div>
+          </article>
+        </div>
+      </div>
+    </main>
+    
+
+<footer class="site-footer astro-2YTRXIWH" id="footer">
+  <div class="footer-inner astro-2YTRXIWH">
+    <h4 class="text-center name astro-2YTRXIWH">Utsav Devadiga</h4>
+    <p class="email text-center my-4 astro-2YTRXIWH">utsav.workk[at]gmail.com</p>
+    <ul class="social-list astro-2YTRXIWH">
+      <li class="astro-2YTRXIWH">
+        <a href="https://github.com/utsav-devadiga" target="_blank" rel="noreferrer" title="GitHub" class="astro-2YTRXIWH">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M224,224a8,8,0,0,1-8,8,32.1,32.1,0,0,1-32-32v-8a16,16,0,0,0-16-16H156v40a16,16,0,0,0,16,16,8,8,0,0,1,0,16,32.1,32.1,0,0,1-32-32V176H116v40a32.1,32.1,0,0,1-32,32,8,8,0,0,1,0-16,16,16,0,0,0,16-16V176H88a16,16,0,0,0-16,16v8a32.1,32.1,0,0,1-32,32,8,8,0,0,1,0-16,16,16,0,0,0,16-16v-8a32.1,32.1,0,0,1,14.8-27A55.8,55.8,0,0,1,48,120v-8a58,58,0,0,1,7.7-28.3A59.9,59.9,0,0,1,61.1,36,7.8,7.8,0,0,1,68,32a59.7,59.7,0,0,1,48,24h24a59.7,59.7,0,0,1,48-24,7.8,7.8,0,0,1,6.9,4,59.9,59.9,0,0,1,5.4,47.7A58,58,0,0,1,208,112v8a55.8,55.8,0,0,1-22.8,45A32.1,32.1,0,0,1,200,192v8a16,16,0,0,0,16,16A8,8,0,0,1,224,224Z"></path></svg>
+        </a>
+      </li>
+      <li class="astro-2YTRXIWH">
+        <a href="https://www.linkedin.com/in/utsav-devadiga-a6b143179/" target="_blank" rel="noreferrer" title="Linkedin" class="astro-2YTRXIWH">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M212,28H44A16,16,0,0,0,28,44V212a16,16,0,0,0,16,16H212a16,16,0,0,0,16-16V44A16,16,0,0,0,212,28ZM96,176a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0ZM88,92a12,12,0,1,1,12-12A12,12,0,0,1,88,92Zm96,84a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.8-1.8A36,36,0,0,1,184,140Z"></path></svg>
+        </a>
+      </li>
+      <li class="astro-2YTRXIWH">
+        <a href="https://www.instagram.com/utsav_devadiga/" target="_blank" rel="noreferrer" title="Instagram" class="astro-2YTRXIWH">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><circle cx="128" cy="128" r="32"></circle><path d="M172,28H84A56,56,0,0,0,28,84v88a56,56,0,0,0,56,56h88a56,56,0,0,0,56-56V84A56,56,0,0,0,172,28ZM128,176a48,48,0,1,1,48-48A48,48,0,0,1,128,176Zm52-88a12,12,0,1,1,12-12A12,12,0,0,1,180,88Z"></path></svg>
+        </a>
+      </li>
+      <li class="astro-2YTRXIWH">
+        <a href="https://twitter.com/utsav_devadiga" target="_blank" rel="noreferrer" title="Twitter" class="astro-2YTRXIWH">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M245.7,77.7l-30.2,30.1C209.5,177.7,150.5,232,80,232c-14.5,0-26.5-2.3-35.6-6.8-7.3-3.7-10.3-7.6-11.1-8.8a8,8,0,0,1,3.9-11.9c.2-.1,23.8-9.1,39.1-26.4a108.6,108.6,0,0,1-24.7-24.4c-13.7-18.6-28.2-50.9-19.5-99.1a8.1,8.1,0,0,1,5.5-6.2,8,8,0,0,1,8.1,1.9c.3.4,33.6,33.2,74.3,43.8V88a48.3,48.3,0,0,1,48.6-48,48.2,48.2,0,0,1,41,24H240a8,8,0,0,1,7.4,4.9A8.4,8.4,0,0,1,245.7,77.7Z"></path></svg>
+        </a>
+      </li>
+    </ul>
+
+    <div class="emoji mt-6 astro-2YTRXIWH">
+      <img src="/assets/lllook.svg" class="mx-auto astro-2YTRXIWH" alt="">
+    </div>
+  </div>
+</footer>
+
+
+
+  
+</body></html>
